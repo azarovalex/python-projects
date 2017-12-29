@@ -1,11 +1,16 @@
 import requests
 from bs4 import BeautifulSoup
 
-request = requests.get("https://www.onliner.by")
+request = requests.get("https://catalog.onliner.by/headphones/beats/mlye2")
+
 content = request.content
+
 soup = BeautifulSoup(content, "html.parser")
-element = soup.find("span", {"class": "_u"})
 
-print(element.text)
+element = soup.find("a", {"class": "offers-description__link offers-description__link_subsidiary offers-description__link_nodecor"})
 
-# <span class="_u" data-bind="text: '$ ' + $root.amount">$ 2,0023</span>
+stringPrice = element.text.strip()    # 270,00 – 329,00 р.
+
+lowestPrice = int(stringPrice[:3])
+
+print(lowestPrice)
